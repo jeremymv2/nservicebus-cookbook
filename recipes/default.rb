@@ -1,4 +1,3 @@
-#
 # Cookbook Name:: nservicebus
 # Recipe:: default
 
@@ -6,10 +5,9 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-raise 'This recipe only supports Windows' unless node['platform_family'] == 'windows'
+raise 'This recipe only supports Windows' if node['platform_family'] == 'windows'
 
 directory 'C:/Program Files (x86)/Particular Software/' do
-  recursive true
   action :create
 end
 
@@ -75,31 +73,28 @@ ruby_block "Exec powershell Packages.PerfCounters.setup.ps1" do
   not_if { File.exist?("#{Chef::Config[:file_cache_path]}/Packages.PerfCounters.setup.ps1.RAN") }
 end
 
-windows_package 'ServiceInsight' do
+windows_package 'Particular Software ServiceInsight' do
   source node['nservicebus']['serviceinsight']['url']
   checksum node['nservicebus']['serviceinsight']['sha256checksum']
   options '/quiet'
   installer_type :custom
   action :install
-  not_if {File.exists?("C:/Program Files (x86)/Particular Software/ServiceInsight")}
 end
 
-windows_package 'ServicePulse' do
+windows_package 'Particular Software ServicePulse' do
   source node['nservicebus']['servicepulse']['url']
   checksum node['nservicebus']['servicepulse']['sha256checksum']
   options '/quiet'
   installer_type :custom
   action :install
-  not_if {File.exists?("C:/Program Files (x86)/Particular Software/ServicePulse")}
 end
 
-windows_package 'ServiceControl' do
+windows_package 'Particular Software ServiceControl' do
   source node['nservicebus']['servicecontrol']['url']
   checksum node['nservicebus']['servicecontrol']['sha256checksum']
   options '/quiet'
   installer_type :custom
   action :install
-  not_if {File.exists?("C:/Program Files (x86)/Particular Software/ServiceControl")}
 end
 
 remote_file "NServiceBus License" do
