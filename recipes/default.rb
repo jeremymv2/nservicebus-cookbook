@@ -5,7 +5,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-raise 'This recipe only supports Windows' if node['platform_family'] == 'windows'
+raise 'This recipe only supports Windows' if node['platform_family'] != 'windows'
 
 directory 'C:/Program Files (x86)/Particular Software/' do
   action :create
